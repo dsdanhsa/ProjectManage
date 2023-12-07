@@ -1,0 +1,46 @@
+<!-- user_list.html -->
+<!DOCTYPE html>
+<html>
+
+<body>
+    <h1>User List</h1>
+
+    <form method="get" action="">
+        <label for="sort_by">Sort by:</label>
+        <select name="sort_by" id="sort_by">
+            <option value="" {% if not sort_by %}selected{% endif %}>--</option>
+            <option value="name" {% if sort_by == 'name' %}selected{% endif %}>Name</option>
+            <option value="dob" {% if sort_by == 'dob' %}selected{% endif %}>Date</option>
+            <option value="role" {% if sort_by == 'role' %}selected{% endif %}>Role</option>
+        </select>
+        <button type="submit">Sort</button>
+    </form>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th><a href="?sort_by=name">Name</a></th>
+                <th><a href="?sort_by=dob">DOB</a></th>
+                <th><a href="?sort_by=role">Role</a></th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.dob }}</td>
+                    <td>{{ user.role }}</td>
+                    <td>
+                        <a href="{% url 'username:user_update' user.id %}">Update</a>
+                        <a href="{% url 'username:user_delete' user.id %}">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{% url 'username:user_create' %}">Create a new user</a>
+</body>
+
+</html>
